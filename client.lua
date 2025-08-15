@@ -87,53 +87,73 @@ Citizen.CreateThread(function()
         end
 
         if inArena then
-            -- HUD PvP moderne en haut d'écran
-            -- Fond principal arrondi avec transparence
-            DrawRect(0.5, 0.08, 0.35, 0.08, 0, 0, 0, 120)
+            -- Stats modernes en haut à gauche (arrondi)
+            DrawRect(0.12, 0.08, 0.18, 0.08, 0, 0, 0, 140)
             
-            -- Bordure rouge subtile
-            DrawRect(0.5, 0.04, 0.35, 0.002, 187, 0, 10, 200)
-            DrawRect(0.5, 0.12, 0.35, 0.002, 187, 0, 10, 200)
+            -- Bordures arrondies simulées avec des petits rectangles
+            DrawRect(0.03, 0.08, 0.002, 0.06, 187, 0, 10, 180)  -- gauche
+            DrawRect(0.21, 0.08, 0.002, 0.06, 187, 0, 10, 180)  -- droite
+            DrawRect(0.12, 0.04, 0.16, 0.002, 187, 0, 10, 180)  -- haut
+            DrawRect(0.12, 0.12, 0.16, 0.002, 187, 0, 10, 180)  -- bas
             
-            -- Titre PVP ARENA centré
-            SetTextScale(0.45, 0.45)
+            -- Titre PVP
+            SetTextScale(0.35, 0.35)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(187, 0, 10, 255)
             SetTextEntry("STRING")
             AddTextComponentString("PVP ARENA")
             SetTextCentre(true)
-            DrawText(0.5, 0.045)
+            DrawText(0.12, 0.05)
             
-            -- Section Kills (gauche)
-            SetTextScale(0.4, 0.4)
+            -- Kills à gauche
+            SetTextScale(0.32, 0.32)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(46, 204, 113, 255)
             SetTextEntry("STRING")
-            AddTextComponentString("KILLS: " .. tostring(hud.kills))
+            AddTextComponentString("KILLS")
             SetTextCentre(true)
-            DrawText(0.4, 0.075)
+            DrawText(0.08, 0.075)
             
-            -- Section Deaths (droite)
+            -- Nombre de kills
             SetTextScale(0.4, 0.4)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 255, 255, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString(tostring(hud.kills))
+            SetTextCentre(true)
+            DrawText(0.08, 0.095)
+            
+            -- Deaths à droite
+            SetTextScale(0.32, 0.32)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(231, 76, 60, 255)
             SetTextEntry("STRING")
-            AddTextComponentString("DEATHS: " .. tostring(hud.deaths))
+            AddTextComponentString("DEATHS")
             SetTextCentre(true)
-            DrawText(0.6, 0.075)
+            DrawText(0.16, 0.075)
             
-            -- Instructions de sortie en bas du HUD
-            SetTextScale(0.32, 0.32)
+            -- Nombre de deaths
+            SetTextScale(0.4, 0.4)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255, 255, 255, 180)
+            SetTextColour(255, 255, 255, 255)
             SetTextEntry("STRING")
-            AddTextComponentString("Appuyez sur ~r~E~w~ pour quitter")
+            AddTextComponentString(tostring(hud.deaths))
             SetTextCentre(true)
-            DrawText(0.5, 0.095)
+            DrawText(0.16, 0.095)
+            
+            -- Instructions de sortie en bas à droite
+            SetTextScale(0.28, 0.28)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 255, 255, 200)
+            SetTextEntry("STRING")
+            AddTextComponentString("Appuyez sur ~r~E~w~ pour quitter l'arène")
+            DrawText(0.7, 0.92)
 
             -- Marqueur au sol + blocage sortie
             if currentArena and Config.Arenas and Config.Arenas[currentArena] then
