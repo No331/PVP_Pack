@@ -46,9 +46,14 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         if disableVMenu then
+            -- Bloquer vMenu
+            DisableControlAction(0, 244, true) -- M key (vMenu)
+            DisableControlAction(0, 288, true) -- F1 key (vMenu)
+            DisableControlAction(0, 170, true) -- F3 key (vMenu alternative)
+            DisableControlAction(0, 166, true) -- F5 key (vMenu alternative)
+            DisableControlAction(0, 167, true) -- F6 key (vMenu alternative)
+            -- Bloquer noclip
             DisableControlAction(0, 289, true) -- F2 Noclip
-            DisableControlAction(0, 170, true) -- F5 Menu
-            DisableControlAction(0, 166, true) -- F5 alternative
             TriggerEvent('vMenu:disableMenu', true)
         else
             TriggerEvent('vMenu:disableMenu', false)
