@@ -20,7 +20,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.85);
     z-index: 1000;
 }
 
@@ -31,133 +31,205 @@ body {
 .menu-container {
     background: #000000;
     border: 3px solid #bb000a;
-    padding: 30px;
-    max-width: 500px;
+    padding: 40px;
+    max-width: 700px;
     width: 90%;
-    box-shadow: 0 0 20px rgba(187, 0, 10, 0.5);
+    box-shadow: 0 0 30px rgba(187, 0, 10, 0.6);
 }
 
 .menu-header {
     text-align: center;
-    margin-bottom: 25px;
-    border-bottom: 2px solid #bb000a;
-    padding-bottom: 15px;
+    margin-bottom: 35px;
 }
 
 .menu-header h1 {
     color: #bb000a;
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.header-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #bb000a, transparent);
 }
 
 .arenas-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 25px;
+    gap: 25px;
+    margin-bottom: 35px;
 }
 
 .arena-card {
-    background: #1a1a1a;
+    background: #111111;
     border: 2px solid #333333;
-    padding: 20px;
-    text-align: center;
+    overflow: hidden;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .arena-card:hover {
     border-color: #bb000a;
-    background: #222222;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(187, 0, 10, 0.3);
 }
 
-.arena-info h3 {
-    color: #ffffff;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    text-transform: uppercase;
+.arena-image {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
 }
 
-.arena-info p {
-    color: #cccccc;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+.arena-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-.arena-info .players {
-    color: #bb000a;
-    font-size: 0.8rem;
-    font-weight: 500;
-    display: block;
-    margin-bottom: 15px;
+.arena-card:hover .arena-image img {
+    transform: scale(1.1);
+}
+
+.arena-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.arena-card:hover .arena-overlay {
+    opacity: 1;
 }
 
 .join-btn {
     background: #bb000a;
     color: #ffffff;
     border: none;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease;
-    width: 100%;
     font-family: 'Roboto', Arial, sans-serif;
+    letter-spacing: 1px;
 }
 
 .join-btn:hover {
     background: #dd0010;
+    transform: scale(1.05);
 }
 
 .join-btn:active {
     background: #990008;
+    transform: scale(0.95);
+}
+
+.arena-name {
+    background: #000000;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-top: 2px solid #bb000a;
 }
 
 .menu-footer {
     text-align: center;
-    border-top: 2px solid #bb000a;
-    padding-top: 15px;
+}
+
+.footer-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #bb000a, transparent);
+    margin-bottom: 20px;
 }
 
 .close-btn {
     background: transparent;
     color: #ffffff;
     border: 2px solid #bb000a;
-    padding: 10px 30px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 600;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     font-family: 'Roboto', Arial, sans-serif;
+    letter-spacing: 1px;
 }
 
 .close-btn:hover {
     background: #bb000a;
     color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(187, 0, 10, 0.4);
+}
+
+.close-btn:active {
+    transform: translateY(0);
 }
 
 /* Responsive pour mobile */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .menu-container {
-        padding: 20px;
+        padding: 25px;
         margin: 20px;
     }
     
     .arenas-grid {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 20px;
+    }
+    
+    .menu-header h1 {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+    }
+    
+    .arena-image {
+        height: 150px;
+    }
+    
+    .arena-name {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-container {
+        padding: 20px;
     }
     
     .menu-header h1 {
         font-size: 1.5rem;
+        letter-spacing: 1px;
     }
     
-    .arena-card {
-        padding: 15px;
+    .arena-image {
+        height: 120px;
+    }
+    
+    .join-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }
