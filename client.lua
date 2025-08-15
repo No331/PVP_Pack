@@ -195,13 +195,10 @@ AddEventHandler('pvp:openArenaMenu', function()
 end)
 
 -- Menu choix arène (NUI)
-RegisterCommand("chooseArena", function()
-    SetNuiFocus(true, true)
-    SendNUIMessage({ action = "openArenaMenu", arenas = Config.Arenas })
-end)
 
 RegisterNUICallback("selectArena", function(data, cb)
     local arenaIndex = data.index
+    print("Arena selected: " .. arenaIndex) -- Debug
     TriggerServerEvent("pvp:joinArena", arenaIndex)
     SetNuiFocus(false, false)
     cb("ok")
