@@ -203,7 +203,7 @@ body {
     opacity: 1;
 }
 
-.arena-play-btn {
+.join-btn {
     background: rgba(255, 255, 255, 0.95);
     color: #00d4ff;
     padding: 15px 30px;
@@ -222,11 +222,11 @@ body {
     font-family: 'Orbitron', sans-serif;
 }
 
-.arena-card:hover .arena-play-btn {
+.arena-card:hover .join-btn {
     transform: scale(1);
 }
 
-.arena-play-btn:hover {
+.join-btn:hover {
     background: rgba(255, 255, 255, 1);
     transform: scale(1.05);
 }

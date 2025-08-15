@@ -15,14 +15,16 @@ end
 RegisterNetEvent('pvp:joinArena')
 AddEventHandler('pvp:joinArena', function(arenaIndex)
     local src = source
+    print("Server: Received joinArena request from player " .. src .. " for arena " .. tostring(arenaIndex))
     local a = getArena(arenaIndex)
-    
-    print("Server: Player " .. src .. " trying to join arena " .. tostring(arenaIndex)) -- Debug
     
     if not a then 
         print("Server: Arena " .. tostring(arenaIndex) .. " not found")
+        print("Server: Available arenas:", json.encode(Config.Arenas))
         return 
     end
+    
+    print("Server: Arena found:", json.encode(a))
     
     -- Initialiser le joueur
     players[src] = {arena = arenaIndex, kills = 0, deaths = 0, vMenuDisabled = true}
@@ -32,6 +34,7 @@ AddEventHandler('pvp:joinArena', function(arenaIndex)
     print("Server: Player " .. src .. " joining arena " .. a.name)
     
     -- Téléporter le joueur et donner l'arme
+    print("Server: Triggering forceJoinClient for player " .. src)
     TriggerClientEvent('pvp:forceJoinClient', src, arenaIndex, a)
 end)
 

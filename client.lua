@@ -186,19 +186,23 @@ end)
 -- Menu choix arène (texte)
 RegisterNetEvent('pvp:openArenaMenu')
 AddEventHandler('pvp:openArenaMenu', function()
+    print("Opening arena menu...")
     -- Ouvrir l'interface NUI moderne
     SetNuiFocus(true, true)
     SendNUIMessage({
         action = "openArenaMenu",
         arenas = Config.Arenas
     })
+    print("NUI message sent")
 end)
 
 -- Callbacks NUI
 RegisterNUICallback("selectArena", function(data, cb)
+    print("selectArena callback received with data:", json.encode(data))
     local arenaIndex = tonumber(data.index)
     print("Arena selected: " .. tostring(arenaIndex)) -- Debug
     if arenaIndex and Config.Arenas[arenaIndex] then
+        print("Valid arena found, joining arena " .. arenaIndex)
         TriggerServerEvent("pvp:joinArena", arenaIndex)
         SetNuiFocus(false, false)
         cb("ok")
@@ -209,6 +213,7 @@ RegisterNUICallback("selectArena", function(data, cb)
 end)
 
 RegisterNUICallback("closeMenu", function(_, cb)
+    print("closeMenu callback received")
     SetNuiFocus(false, false)
     cb("ok")
 end)

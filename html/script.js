@@ -3,20 +3,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeBtn = document.getElementById('closeBtn');
     const arenaCards = document.querySelectorAll('.arena-card');
 
-    console.log('Script loaded, found', arenaCards.length, 'arena cards');
+    console.log('PVP Script loaded, found', arenaCards.length, 'arena cards');
 
     // Fonction pour obtenir le nom de la ressource
     function GetParentResourceName() {
-        return window.location.hostname;
+        return 'pvp_pack'; // Nom fixe de votre ressource
     }
 
     // Écouter les messages de FiveM
     window.addEventListener('message', function(event) {
         const data = event.data;
-        console.log('Received message:', data);
+        console.log('Received message from FiveM:', data);
         
         if (data.action === 'openArenaMenu') {
-            console.log('Opening arena menu');
+            console.log('Opening arena menu with arenas:', data.arenas);
             showMenu();
         } else if (data.action === 'closeArenaMenu') {
             console.log('Closing arena menu');
@@ -26,14 +26,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Afficher le menu
     function showMenu() {
-        console.log('Showing menu');
+        console.log('Showing arena menu');
         arenaMenu.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
 
     // Cacher le menu
     function hideMenu() {
-        console.log('Hiding menu');
+        console.log('Hiding arena menu');
         arenaMenu.classList.add('hidden');
         document.body.style.overflow = 'auto';
         
@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({})
+        }).then(response => {
+            console.log('Close menu response:', response);
         }).catch(error => {
             console.error('Error closing menu:', error);
         });
@@ -51,7 +53,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Sélectionner une arène
     function selectArena(arenaIndex) {
-        console.log('Selecting arena:', arenaIndex);
+        console.log('Attempting to select arena:', arenaIndex);
+        
+        // Validation de l'index
+        if (!arenaIndex || arenaIndex < 1 || arenaIndex > 4) {
+            console.error('Invalid arena index:', arenaIndex);
+            return;
+        }
+        
+        console.log('Sending arena selection to FiveM...');
         
         // Envoyer la sélection à FiveM
         fetch(`https://${GetParentResourceName()}/selectArena`, {
@@ -60,44 +70,51 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                index: arenaIndex
+                index: parseInt(arenaIndex)
             })
         }).then(response => {
-            console.log('Arena selection sent successfully');
+            console.log('Arena selection response status:', response.status);
+            return response.text();
+        }).then(data => {
+            console.log('Arena selection response data:', data);
             hideMenu();
         }).catch(error => {
             console.error('Error sending arena selection:', error);
+            // Essayer de fermer le menu même en cas d'erreur
+            hideMenu();
         });
     }
 
-    // Event listeners
+    // Event listener pour le bouton fermer
     if (closeBtn) {
         closeBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
+            console.log('Close button clicked');
             hideMenu();
         });
     }
 
     // Ajouter les event listeners aux cartes d'arène
     arenaCards.forEach((card, index) => {
-        console.log('Adding listener to card', index + 1);
+        const arenaIndex = parseInt(card.dataset.arena);
+        console.log('Setting up card', index, 'with arena index:', arenaIndex);
+        
+        // Event listener sur la carte entière
         card.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            const arenaIndex = parseInt(this.dataset.arena);
-            console.log('Card clicked, arena index:', arenaIndex);
+            console.log('Arena card clicked:', arenaIndex);
             selectArena(arenaIndex);
         });
         
-        // Ajouter aussi un listener sur le bouton play
-        const playBtn = card.querySelector('.arena-play-btn');
-        if (playBtn) {
-            playBtn.addEventListener('click', function(e) {
+        // Event listener spécifique sur le bouton rejoindre
+        const joinBtn = card.querySelector('.join-btn');
+        if (joinBtn) {
+            joinBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                const arenaIndex = parseInt(card.dataset.arena);
-                console.log('Play button clicked, arena index:', arenaIndex);
+                console.log('Join button clicked for arena:', arenaIndex);
                 selectArena(arenaIndex);
             });
         }
@@ -106,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fermer avec Échap
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
+            console.log('Escape key pressed');
             hideMenu();
         }
     });
@@ -121,9 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fermer en cliquant sur l'arrière-plan
     arenaMenu.addEventListener('click', function(e) {
         if (e.target === arenaMenu) {
+            console.log('Background clicked');
             hideMenu();
         }
     });
 
-    console.log('All event listeners added');
+    console.log('All event listeners added successfully');
 });
