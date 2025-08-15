@@ -48,15 +48,14 @@ Citizen.CreateThread(function()
         if disableVMenu then
             -- Bloquer noclip
             DisableControlAction(0, 289, true) -- F2 Noclip
-            -- Désactiver vMenu complètement
-            if GetResourceState('vMenu') == 'started' then
-                TriggerEvent('vMenu:disableMenu', true)
-            end
-        else
-            -- Réactiver vMenu
-            if GetResourceState('vMenu') == 'started' then
-                TriggerEvent('vMenu:disableMenu', false)
-            end
+            -- Désactiver vMenu avec les événements spécifiques
+            TriggerEvent('vMenu:SetDisableMenu', true)
+            -- Bloquer aussi les touches communes de vMenu
+            DisableControlAction(0, 244, true) -- M
+            DisableControlAction(0, 288, true) -- F1
+            DisableControlAction(0, 170, true) -- F3
+            DisableControlAction(0, 166, true) -- F5
+            DisableControlAction(0, 167, true) -- F6
         end
     end
 end)
@@ -220,10 +219,8 @@ Citizen.CreateThread(function()
                 inArena = false
                 currentArena = nil
                 disableVMenu = false
-                -- Réactiver vMenu explicitement
-                if GetResourceState('vMenu') == 'started' then
-                    TriggerEvent('vMenu:disableMenu', false)
-                end
+                -- Réactiver vMenu
+                TriggerEvent('vMenu:SetDisableMenu', false)
                 RemoveAllPedWeapons(PlayerPedId(), true)
                 toggleAutoSpawn(true)
                 SetEntityCoords(PlayerPedId(), spawnCoords.x, spawnCoords.y, spawnCoords.z)
@@ -280,10 +277,8 @@ AddEventHandler('pvp:forceJoinClient', function(arenaIndex, arenaData)
     toggleAutoSpawn(false)
     disableVMenu = true
     
-    -- Désactiver vMenu explicitement
-    if GetResourceState('vMenu') == 'started' then
-        TriggerEvent('vMenu:disableMenu', true)
-    end
+    -- Désactiver vMenu avec l'événement spécifique
+    TriggerEvent('vMenu:SetDisableMenu', true)
 
     DoScreenFadeOut(200)
     Citizen.Wait(250)
@@ -310,10 +305,8 @@ RegisterCommand("quitpvp", function()
         inArena = false
         currentArena = nil
         disableVMenu = false
-        -- Réactiver vMenu explicitement
-        if GetResourceState('vMenu') == 'started' then
-            TriggerEvent('vMenu:disableMenu', false)
-        end
+        -- Réactiver vMenu
+        TriggerEvent('vMenu:SetDisableMenu', false)
         RemoveAllPedWeapons(PlayerPedId(), true)
         toggleAutoSpawn(true)
         SetEntityCoords(PlayerPedId(), spawnCoords.x, spawnCoords.y, spawnCoords.z)
