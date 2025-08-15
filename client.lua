@@ -46,94 +46,62 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         if disableVMenu then
-            -- Bloquer noclip
-            DisableControlAction(0, 289, true) -- F2 Noclip
-            -- Désactiver vMenu v3.7.0 avec l'événement correct
+            -- Essayer tous les exports possibles de vMenu
+            if GetResourceState('vMenu') == 'started' then
+                -- Exports vMenu v3.7.0
+                pcall(function() exports.vMenu:SetMenuVisibility(false) end)
+                pcall(function() exports.vMenu:DisableMenu() end)
+                pcall(function() exports.vMenu:CloseMenu() end)
+                pcall(function() exports['vMenu']:SetMenuVisibility(false) end)
+                pcall(function() exports['vMenu']:DisableMenu() end)
+                pcall(function() exports['vMenu']:CloseMenu() end)
+            end
+            
+            -- Événements vMenu
             TriggerEvent('vMenu:SetMenuVisibility', false)
-            -- Bloquer TOUTES les touches possibles de vMenu
-            DisableControlAction(0, 244, true) -- M
-            DisableControlAction(0, 288, true) -- F1
-            DisableControlAction(0, 289, true) -- F2
-            DisableControlAction(0, 170, true) -- F3
-            DisableControlAction(0, 166, true) -- F5
-            DisableControlAction(0, 167, true) -- F6
-            DisableControlAction(0, 168, true) -- F7
-            DisableControlAction(0, 169, true) -- F8
-            DisableControlAction(0, 56, true) -- F9
-            DisableControlAction(0, 57, true) -- F10
-            DisableControlAction(0, 344, true) -- F11
-            DisableControlAction(0, 199, true) -- P
-            DisableControlAction(0, 200, true) -- ESC
-            DisableControlAction(0, 322, true) -- ESC (alternative)
-            DisableControlAction(0, 19, true) -- ALT
-            DisableControlAction(0, 36, true) -- CTRL
-            DisableControlAction(0, 21, true) -- SHIFT
-            DisableControlAction(0, 245, true) -- T
-            DisableControlAction(0, 246, true) -- Y
-            DisableControlAction(0, 303, true) -- U
-            DisableControlAction(0, 304, true) -- I
-            DisableControlAction(0, 305, true) -- O
-            DisableControlAction(0, 137, true) -- CAPS LOCK
-            DisableControlAction(0, 311, true) -- K
-            DisableControlAction(0, 182, true) -- L
-            DisableControlAction(0, 20, true) -- Z
-            DisableControlAction(0, 73, true) -- X
-            DisableControlAction(0, 26, true) -- C
-            DisableControlAction(0, 29, true) -- B
-            DisableControlAction(0, 249, true) -- N
-            DisableControlAction(0, 306, true) -- V
-            DisableControlAction(0, 307, true) -- H
-            DisableControlAction(0, 308, true) -- G
-            DisableControlAction(0, 309, true) -- J
-            DisableControlAction(0, 310, true) -- Q
-            DisableControlAction(0, 312, true) -- E
-            DisableControlAction(0, 313, true) -- R
-            DisableControlAction(0, 314, true) -- W
-            DisableControlAction(0, 315, true) -- S
-            DisableControlAction(0, 316, true) -- A
-            DisableControlAction(0, 317, true) -- D
-            -- Touches numériques
-            DisableControlAction(0, 157, true) -- 1
-            DisableControlAction(0, 158, true) -- 2
-            DisableControlAction(0, 160, true) -- 3
-            DisableControlAction(0, 164, true) -- 4
-            DisableControlAction(0, 165, true) -- 5
-            DisableControlAction(0, 159, true) -- 6
-            DisableControlAction(0, 161, true) -- 7
-            DisableControlAction(0, 162, true) -- 8
-            DisableControlAction(0, 163, true) -- 9
-            DisableControlAction(0, 84, true) -- 0
-            -- Touches spéciales
-            DisableControlAction(0, 84, true) -- SPACE
-            DisableControlAction(0, 194, true) -- BACKSPACE
-            DisableControlAction(0, 191, true) -- ENTER
-            DisableControlAction(0, 201, true) -- TAB
-            DisableControlAction(0, 202, true) -- DELETE
-            DisableControlAction(0, 203, true) -- HOME
-            DisableControlAction(0, 204, true) -- END
-            DisableControlAction(0, 205, true) -- PAGE UP
-            DisableControlAction(0, 206, true) -- PAGE DOWN
-            -- Touches directionnelles
-            DisableControlAction(0, 172, true) -- UP
-            DisableControlAction(0, 173, true) -- DOWN
-            DisableControlAction(0, 174, true) -- LEFT
-            DisableControlAction(0, 175, true) -- RIGHT
-            -- Pavé numérique
-            DisableControlAction(0, 96, true) -- NUM 0
-            DisableControlAction(0, 97, true) -- NUM 1
-            DisableControlAction(0, 98, true) -- NUM 2
-            DisableControlAction(0, 99, true) -- NUM 3
-            DisableControlAction(0, 100, true) -- NUM 4
-            DisableControlAction(0, 101, true) -- NUM 5
-            DisableControlAction(0, 102, true) -- NUM 6
-            DisableControlAction(0, 103, true) -- NUM 7
-            DisableControlAction(0, 104, true) -- NUM 8
-            DisableControlAction(0, 105, true) -- NUM 9
-            DisableControlAction(0, 106, true) -- NUM *
-            DisableControlAction(0, 107, true) -- NUM +
-            DisableControlAction(0, 109, true) -- NUM -
-            DisableControlAction(0, 110, true) -- NUM .
-            DisableControlAction(0, 111, true) -- NUM /
+            TriggerEvent('vMenu:DisableMenu')
+            TriggerEvent('vMenu:CloseMenu')
+            TriggerEvent('vMenu:SetDisableMenu', true)
+            TriggerEvent('vmenu:client:SetMenuVisibility', false)
+            TriggerEvent('vmenu:SetMenuVisibility', false)
+            
+            -- Bloquer TOUS les contrôles possibles
+            for i = 0, 350 do
+                DisableControlAction(0, i, true)
+                DisableControlAction(1, i, true)
+                DisableControlAction(2, i, true)
+            end
+            
+            -- Réactiver seulement les contrôles essentiels pour le jeu
+            EnableControlAction(0, 1, true) -- LookLeftRight
+            EnableControlAction(0, 2, true) -- LookUpDown
+            EnableControlAction(0, 24, true) -- Attack
+            EnableControlAction(0, 25, true) -- Aim
+            EnableControlAction(0, 32, true) -- MoveUpOnly
+            EnableControlAction(0, 33, true) -- MoveDownOnly
+            EnableControlAction(0, 34, true) -- MoveLeftOnly
+            EnableControlAction(0, 35, true) -- MoveRightOnly
+            EnableControlAction(0, 21, true) -- Sprint
+            EnableControlAction(0, 22, true) -- Jump
+            EnableControlAction(0, 36, true) -- Duck
+            EnableControlAction(0, 44, true) -- Cover
+            EnableControlAction(0, 140, true) -- MeleeAttackLight
+            EnableControlAction(0, 141, true) -- MeleeAttackHeavy
+            EnableControlAction(0, 142, true) -- MeleeAttackAlternate
+            EnableControlAction(0, 143, true) -- MeleeBlock
+            EnableControlAction(0, 37, true) -- SelectWeapon
+            EnableControlAction(0, 157, true) -- SelectWeaponUnarmed
+            EnableControlAction(0, 158, true) -- SelectWeaponMelee
+            EnableControlAction(0, 159, true) -- SelectWeaponHandgun
+            EnableControlAction(0, 160, true) -- SelectWeaponShotgun
+            EnableControlAction(0, 161, true) -- SelectWeaponSMG
+            EnableControlAction(0, 162, true) -- SelectWeaponAutoRifle
+            EnableControlAction(0, 163, true) -- SelectWeaponSniper
+            EnableControlAction(0, 164, true) -- SelectWeaponHeavy
+            EnableControlAction(0, 165, true) -- SelectWeaponSpecial
+            EnableControlAction(0, 23, true) -- Enter
+            EnableControlAction(0, 75, true) -- Exit
+            EnableControlAction(0, 38, true) -- E (pour quitter l'arène)
         end
     end
 end)
@@ -355,8 +323,13 @@ AddEventHandler('pvp:forceJoinClient', function(arenaIndex, arenaData)
     toggleAutoSpawn(false)
     disableVMenu = true
     
-    -- Désactiver vMenu v3.7.0
+    -- Désactiver vMenu avec tous les moyens possibles
+    if GetResourceState('vMenu') == 'started' then
+        pcall(function() exports.vMenu:SetMenuVisibility(false) end)
+        pcall(function() exports['vMenu']:SetMenuVisibility(false) end)
+    end
     TriggerEvent('vMenu:SetMenuVisibility', false)
+    TriggerEvent('vMenu:SetDisableMenu', true)
 
     DoScreenFadeOut(200)
     Citizen.Wait(250)
@@ -384,7 +357,17 @@ RegisterCommand("quitpvp", function()
         currentArena = nil
         disableVMenu = false
         -- Réactiver vMenu v3.7.0
+        if GetResourceState('vMenu') == 'started' then
+            pcall(function() exports.vMenu:SetMenuVisibility(true) end)
+            pcall(function() exports['vMenu']:SetMenuVisibility(true) end)
+        end
+        if GetResourceState('vMenu') == 'started' then
+            pcall(function() exports.vMenu:SetMenuVisibility(true) end)
+            pcall(function() exports['vMenu']:SetMenuVisibility(true) end)
+        end
         TriggerEvent('vMenu:SetMenuVisibility', true)
+        TriggerEvent('vMenu:SetDisableMenu', false)
+        TriggerEvent('vMenu:SetDisableMenu', false)
         RemoveAllPedWeapons(PlayerPedId(), true)
         toggleAutoSpawn(true)
         SetEntityCoords(PlayerPedId(), spawnCoords.x, spawnCoords.y, spawnCoords.z)
