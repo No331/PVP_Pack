@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = 'auto';
         
         // Envoyer message à FiveM pour fermer
-        fetch(`https://pvp_pack/closeMenu`, {
+        fetch(`https://${GetParentResourceName()}/closeMenu`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function selectArena(arenaIndex) {
         console.log('Selecting arena:', arenaIndex); // Debug
         // Envoyer la sélection à FiveM
-        fetch(`https://pvp_pack/selectArena`, {
+        fetch(`https://${GetParentResourceName()}/selectArena`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,6 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         hideMenu();
+    }
+
+    // Fonction pour obtenir le nom de la ressource
+    function GetParentResourceName() {
+        return window.location.hostname;
     }
 
     // Event listeners
