@@ -87,22 +87,75 @@ Citizen.CreateThread(function()
         end
 
         if inArena then
-            -- HUD
+            -- HUD moderne avec fond carré
+            -- Fond principal du HUD
+            DrawRect(0.15, 0.08, 0.25, 0.12, 0, 0, 0, 180)
+            -- Bordure rouge
+            DrawRect(0.15, 0.08, 0.25, 0.003, 255, 68, 68, 255)
+            DrawRect(0.15, 0.137, 0.25, 0.003, 255, 68, 68, 255)
+            DrawRect(0.025, 0.08, 0.003, 0.12, 255, 68, 68, 255)
+            DrawRect(0.272, 0.08, 0.003, 0.12, 255, 68, 68, 255)
+            
+            -- Titre PvP
+            SetTextScale(0.5, 0.5)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 68, 68, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString("PvP ARENA")
+            DrawText(0.04, 0.035)
+            
+            -- Stats Kills
             SetTextScale(0.4, 0.4)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255,255,255,255)
+            SetTextColour(255, 255, 255, 255)
             SetTextEntry("STRING")
-            AddTextComponentString(("PvP - Kills: %d  Deaths: %d"):format(hud.kills, hud.deaths))
-            DrawText(0.02, 0.02)
-
-            SetTextScale(0.35, 0.35)
-            SetTextFont(0)
+            AddTextComponentString("KILLS")
+            DrawText(0.04, 0.065)
+            
+            SetTextScale(0.6, 0.6)
+            SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(200,50,50,255)
+            SetTextColour(46, 204, 113, 255)
             SetTextEntry("STRING")
-            AddTextComponentString("Tapez /quitpvp pour quitter l'arène")
-            DrawText(0.02, 0.05)
+            AddTextComponentString(tostring(hud.kills))
+            DrawText(0.04, 0.085)
+            
+            -- Stats Deaths
+            SetTextScale(0.4, 0.4)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 255, 255, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString("DEATHS")
+            DrawText(0.04, 0.115)
+            
+            SetTextScale(0.6, 0.6)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(231, 76, 60, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString(tostring(hud.deaths))
+            DrawText(0.04, 0.135)
+            
+            -- Séparateur vertical
+            DrawRect(0.18, 0.08, 0.002, 0.12, 255, 255, 255, 100)
+            
+            -- Instructions de sortie avec fond
+            DrawRect(0.15, 0.22, 0.25, 0.05, 0, 0, 0, 150)
+            DrawRect(0.15, 0.22, 0.25, 0.002, 255, 68, 68, 255)
+            DrawRect(0.15, 0.268, 0.25, 0.002, 255, 68, 68, 255)
+            DrawRect(0.025, 0.22, 0.002, 0.05, 255, 68, 68, 255)
+            DrawRect(0.272, 0.22, 0.002, 0.05, 255, 68, 68, 255)
+            
+            SetTextScale(0.35, 0.35)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 255, 255, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString("~INPUT_CONTEXT~ Pour quitter l'arène")
+            DrawText(0.04, 0.235)
 
             -- Marqueur au sol + blocage sortie
             if currentArena and Config.Arenas and Config.Arenas[currentArena] then
@@ -113,6 +166,18 @@ Citizen.CreateThread(function()
                     SetEntityCoords(p, a.coord.x, a.coord.y, a.coord.z)
                     TriggerEvent('chat:addMessage', { args = {"PvP", "^1Vous ne pouvez pas sortir de la zone !"} })
                 end
+            end
+            
+            -- Permettre de quitter avec E
+            if IsControlJustReleased(0, 38) then -- E key
+                inArena = false
+                currentArena = nil
+                disableVMenu = false
+                RemoveAllPedWeapons(PlayerPedId(), true)
+                toggleAutoSpawn(true)
+                SetEntityCoords(PlayerPedId(), spawnCoords.x, spawnCoords.y, spawnCoords.z)
+                removeArenaBlip()
+                TriggerEvent('chat:addMessage', { args = {"PvP", "^2Vous avez quitté le PvP."} })
             end
         end
     end
