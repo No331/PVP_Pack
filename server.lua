@@ -78,9 +78,9 @@ end)
 RegisterCommand("checkVMenu", function(source, args, raw)
     local src = source
     if isInArena(src) then
-        TriggerClientEvent('vMenu:SetDisableMenu', src, true)
+        TriggerClientEvent('vMenu:SetMenuVisibility', src, false)
     else
-        TriggerClientEvent('vMenu:SetDisableMenu', src, false)
+        TriggerClientEvent('vMenu:SetMenuVisibility', src, true)
     end
 end, false)
 
@@ -102,7 +102,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(5000) -- check toutes les 5 secondes
         for src,_ in pairs(players) do
             if isInArena(src) then
-                TriggerClientEvent('vMenu:SetDisableMenu', src, true)
+                TriggerClientEvent('vMenu:SetMenuVisibility', src, false)
             end
         end
     end
