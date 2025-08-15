@@ -29,13 +29,13 @@ body {
 }
 
 .menu-container {
-    background: rgba(15, 15, 15, 0.95);
+    background: rgba(40, 40, 40, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     padding: 40px;
     max-width: 900px;
     width: 90%;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(187, 0, 10, 0.2);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(187, 0, 10, 0.4);
     backdrop-filter: blur(10px);
 }
 

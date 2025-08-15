@@ -87,73 +87,83 @@ Citizen.CreateThread(function()
         end
 
         if inArena then
-            -- Stats modernes en haut à gauche (arrondi)
-            DrawRect(0.12, 0.08, 0.18, 0.08, 0, 0, 0, 140)
+            -- HUD PvP moderne et compact en haut à gauche
+            local hudWidth = 0.25
+            local hudHeight = 0.12
+            local hudX = 0.02
+            local hudY = 0.02
             
-            -- Bordures arrondies simulées avec des petits rectangles
-            DrawRect(0.03, 0.08, 0.002, 0.06, 187, 0, 10, 180)  -- gauche
-            DrawRect(0.21, 0.08, 0.002, 0.06, 187, 0, 10, 180)  -- droite
-            DrawRect(0.12, 0.04, 0.16, 0.002, 187, 0, 10, 180)  -- haut
-            DrawRect(0.12, 0.12, 0.16, 0.002, 187, 0, 10, 180)  -- bas
+            -- Fond arrondi principal
+            DrawRect(hudX + hudWidth/2, hudY + hudHeight/2, hudWidth, hudHeight, 0, 0, 0, 160)
             
-            -- Titre PVP
-            SetTextScale(0.35, 0.35)
+            -- Bordures arrondies (simulation)
+            DrawRect(hudX + 0.002, hudY + hudHeight/2, 0.003, hudHeight - 0.01, 187, 0, 10, 200)  -- gauche
+            DrawRect(hudX + hudWidth - 0.002, hudY + hudHeight/2, 0.003, hudHeight - 0.01, 187, 0, 10, 200)  -- droite
+            DrawRect(hudX + hudWidth/2, hudY + 0.002, hudWidth - 0.01, 0.003, 187, 0, 10, 200)  -- haut
+            DrawRect(hudX + hudWidth/2, hudY + hudHeight - 0.002, hudWidth - 0.01, 0.003, 187, 0, 10, 200)  -- bas
+            
+            -- Titre PVP ARENA centré
+            SetTextScale(0.4, 0.4)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(187, 0, 10, 255)
             SetTextEntry("STRING")
             AddTextComponentString("PVP ARENA")
             SetTextCentre(true)
-            DrawText(0.12, 0.05)
+            DrawText(hudX + hudWidth/2, hudY + 0.015)
             
-            -- Kills à gauche
-            SetTextScale(0.32, 0.32)
+            -- Ligne de séparation
+            DrawRect(hudX + hudWidth/2, hudY + 0.045, hudWidth - 0.02, 0.001, 187, 0, 10, 150)
+            
+            -- KILLS à gauche
+            SetTextScale(0.35, 0.35)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(46, 204, 113, 255)
             SetTextEntry("STRING")
             AddTextComponentString("KILLS")
             SetTextCentre(true)
-            DrawText(0.08, 0.075)
+            DrawText(hudX + hudWidth/4, hudY + 0.055)
             
             -- Nombre de kills
-            SetTextScale(0.4, 0.4)
+            SetTextScale(0.45, 0.45)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(255, 255, 255, 255)
             SetTextEntry("STRING")
             AddTextComponentString(tostring(hud.kills))
             SetTextCentre(true)
-            DrawText(0.08, 0.095)
+            DrawText(hudX + hudWidth/4, hudY + 0.08)
             
-            -- Deaths à droite
-            SetTextScale(0.32, 0.32)
+            -- DEATHS à droite
+            SetTextScale(0.35, 0.35)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(231, 76, 60, 255)
             SetTextEntry("STRING")
             AddTextComponentString("DEATHS")
             SetTextCentre(true)
-            DrawText(0.16, 0.075)
+            DrawText(hudX + 3*hudWidth/4, hudY + 0.055)
             
             -- Nombre de deaths
-            SetTextScale(0.4, 0.4)
+            SetTextScale(0.45, 0.45)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(255, 255, 255, 255)
             SetTextEntry("STRING")
             AddTextComponentString(tostring(hud.deaths))
             SetTextCentre(true)
-            DrawText(0.16, 0.095)
+            DrawText(hudX + 3*hudWidth/4, hudY + 0.08)
             
-            -- Instructions de sortie en bas à droite
+            -- Instructions pour quitter (intégrées dans le HUD)
             SetTextScale(0.28, 0.28)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255, 255, 255, 200)
+            SetTextColour(255, 255, 255, 180)
             SetTextEntry("STRING")
-            AddTextComponentString("Appuyez sur ~r~E~w~ pour quitter l'arène")
-            DrawText(0.7, 0.92)
+            AddTextComponentString("Appuyez sur ~r~E~w~ pour quitter")
+            SetTextCentre(true)
+            DrawText(hudX + hudWidth/2, hudY + 0.105)
 
             -- Marqueur au sol + blocage sortie
             if currentArena and Config.Arenas and Config.Arenas[currentArena] then
