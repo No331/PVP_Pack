@@ -87,39 +87,44 @@ Citizen.CreateThread(function()
         end
 
         if inArena then
-            -- HUD PvP moderne et compact en haut à gauche
-            local hudWidth = 0.25
-            local hudHeight = 0.12
+            -- HUD PvP compact et moderne comme dans l'image
+            local hudWidth = 0.22
+            local hudHeight = 0.08
             local hudX = 0.02
             local hudY = 0.02
             
-            -- Fond arrondi principal
-            DrawRect(hudX + hudWidth/2, hudY + hudHeight/2, hudWidth, hudHeight, 0, 0, 0, 160)
+            -- Fond compact arrondi
+            DrawRect(hudX + hudWidth/2, hudY + hudHeight/2, hudWidth, hudHeight, 20, 20, 25, 200)
             
-            -- Bordures arrondies (simulation)
-            DrawRect(hudX + 0.002, hudY + hudHeight/2, 0.003, hudHeight - 0.01, 187, 0, 10, 200)  -- gauche
-            DrawRect(hudX + hudWidth - 0.002, hudY + hudHeight/2, 0.003, hudHeight - 0.01, 187, 0, 10, 200)  -- droite
-            DrawRect(hudX + hudWidth/2, hudY + 0.002, hudWidth - 0.01, 0.003, 187, 0, 10, 200)  -- haut
-            DrawRect(hudX + hudWidth/2, hudY + hudHeight - 0.002, hudWidth - 0.01, 0.003, 187, 0, 10, 200)  -- bas
+            -- Bordure violette comme dans l'image
+            DrawRect(hudX + 0.001, hudY + hudHeight/2, 0.002, hudHeight - 0.005, 138, 43, 226, 255)
+            DrawRect(hudX + hudWidth - 0.001, hudY + hudHeight/2, 0.002, hudHeight - 0.005, 138, 43, 226, 255)
+            DrawRect(hudX + hudWidth/2, hudY + 0.001, hudWidth - 0.005, 0.002, 138, 43, 226, 255)
+            DrawRect(hudX + hudWidth/2, hudY + hudHeight - 0.001, hudWidth - 0.005, 0.002, 138, 43, 226, 255)
             
-            -- Titre PVP ARENA centré
-            SetTextScale(0.4, 0.4)
+            -- Icône et texte "Kills" à gauche
+            SetTextScale(0.28, 0.28)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(187, 0, 10, 255)
+            SetTextColour(255, 255, 255, 200)
             SetTextEntry("STRING")
-            AddTextComponentString("PVP ARENA")
-            SetTextCentre(true)
-            DrawText(hudX + hudWidth/2, hudY + 0.015)
+            AddTextComponentString("🏆 Kills")
+            DrawText(hudX + 0.01, hudY + 0.015)
             
-            -- Ligne de séparation
-            DrawRect(hudX + hudWidth/2, hudY + 0.045, hudWidth - 0.02, 0.001, 187, 0, 10, 150)
-            
-            -- KILLS à gauche
-            SetTextScale(0.35, 0.35)
+            -- Nombre de kills
+            SetTextScale(0.32, 0.32)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(46, 204, 113, 255)
+            SetTextColour(255, 255, 255, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString(tostring(hud.kills))
+            DrawText(hudX + 0.08, hudY + 0.015)
+            
+            -- Icône et texte "Deaths" au centre
+            SetTextScale(0.28, 0.28)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 255, 255, 200)
             SetTextEntry("STRING")
             AddTextComponentString("KILLS")
             SetTextCentre(true)
@@ -133,13 +138,14 @@ Citizen.CreateThread(function()
             SetTextEntry("STRING")
             AddTextComponentString(tostring(hud.kills))
             SetTextCentre(true)
-            DrawText(hudX + hudWidth/4, hudY + 0.08)
-            
+            AddTextComponentString("💀 Deaths")
+            DrawText(hudX + 0.11, hudY + 0.015)
             -- DEATHS à droite
-            SetTextScale(0.35, 0.35)
+            -- Nombre de deaths
+            SetTextScale(0.32, 0.32)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(231, 76, 60, 255)
+            SetTextColour(255, 255, 255, 255)
             SetTextEntry("STRING")
             AddTextComponentString("DEATHS")
             SetTextCentre(true)
@@ -152,17 +158,28 @@ Citizen.CreateThread(function()
             SetTextColour(255, 255, 255, 255)
             SetTextEntry("STRING")
             AddTextComponentString(tostring(hud.deaths))
-            SetTextCentre(true)
-            DrawText(hudX + 3*hudWidth/4, hudY + 0.08)
+            AddTextComponentString(tostring(hud.deaths))
+            DrawText(hudX + 0.18, hudY + 0.015)
             
-            -- Instructions pour quitter (intégrées dans le HUD)
+            -- K/D Ratio à droite (optionnel)
+            local kd = hud.deaths > 0 and (hud.kills / hud.deaths) or hud.kills
             SetTextScale(0.28, 0.28)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255, 255, 255, 180)
+            SetTextColour(138, 43, 226, 255)
             SetTextEntry("STRING")
-            AddTextComponentString("Appuyez sur ~r~E~w~ pour quitter")
+            AddTextComponentString("K/D " .. string.format("%.2f", kd))
+            DrawText(hudX + 0.01, hudY + 0.045)
+            
+            -- Instructions pour quitter en bas à droite de l'écran
+            SetTextScale(0.35, 0.35)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 255, 255, 200)
+            SetTextEntry("STRING")
+            AddTextComponentString("Appuyez sur ~r~E~w~ pour quitter l'arène")
             SetTextCentre(true)
+            DrawText(0.85, 0.92)
             DrawText(hudX + hudWidth/2, hudY + 0.105)
 
             -- Marqueur au sol + blocage sortie
