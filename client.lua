@@ -121,26 +121,12 @@ end)
 -- Menu choix arène (texte)
 RegisterNetEvent('pvp:openArenaMenu')
 AddEventHandler('pvp:openArenaMenu', function()
-    local menuText = "Sélectionne ton arène :\n"
-    for i, arena in ipairs(Config.Arenas) do
-        menuText = menuText .. ("~g~%d~s~ - %s\n"):format(i, arena.name)
-    end
-
-    SetNotificationTextEntry("STRING")
-    AddTextComponentString(menuText)
-    DrawNotification(false, false)
-
-    DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP8", "", "", "", "", "", 2)
-    while UpdateOnscreenKeyboard() == 0 do Citizen.Wait(0) end
-
-    if GetOnscreenKeyboardResult() then
-        local choice = tonumber(GetOnscreenKeyboardResult())
-        if choice and Config.Arenas[choice] then
-            TriggerServerEvent('pvp:joinArena', choice)
-        else
-            TriggerEvent('chat:addMessage', { args = {"PvP", "^1Numéro d'arène invalide."} })
-        end
-    end
+    -- Ouvrir l'interface NUI moderne
+    SetNuiFocus(true, true)
+    SendNUIMessage({
+        action = "openArenaMenu",
+        arenas = Config.Arenas
+    })
 end)
 
 -- Menu choix arène (NUI)
@@ -151,7 +137,7 @@ end)
 
 RegisterNUICallback("selectArena", function(data, cb)
     local arenaIndex = data.index
-    TriggerServerEvent("pvp:forceJoinArena", arenaIndex)
+    TriggerServerEvent("pvp:joinArena", arenaIndex)
     SetNuiFocus(false, false)
     cb("ok")
 end)

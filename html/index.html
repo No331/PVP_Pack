@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PvP Arena Selection</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="arenaMenu" class="arena-menu hidden">
+        <div class="menu-container">
+            <div class="menu-header">
+                <h1>SÉLECTION D'ARÈNE</h1>
+                <p>Choisissez votre zone de combat</p>
+            </div>
+            
+            <div class="arenas-grid">
+                <div class="arena-card" data-arena="1">
+                    <div class="arena-image">
+                        <img src="https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Dock">
+                        <div class="arena-overlay">
+                            <div class="arena-number">1</div>
+                        </div>
+                    </div>
+                    <div class="arena-info">
+                        <h3>DOCK</h3>
+                        <p>Zone portuaire industrielle</p>
+                    </div>
+                </div>
+
+                <div class="arena-card" data-arena="2">
+                    <div class="arena-image">
+                        <img src="https://images.pexels.com/photos/906982/pexels-photo-906982.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Port">
+                        <div class="arena-overlay">
+                            <div class="arena-number">2</div>
+                        </div>
+                    </div>
+                    <div class="arena-info">
+                        <h3>PORT</h3>
+                        <p>Terminal maritime</p>
+                    </div>
+                </div>
+
+                <div class="arena-card" data-arena="3">
+                    <div class="arena-image">
+                        <img src="https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Hangar">
+                        <div class="arena-overlay">
+                            <div class="arena-number">3</div>
+                        </div>
+                    </div>
+                    <div class="arena-info">
+                        <h3>HANGAR</h3>
+                        <p>Complexe aéroportuaire</p>
+                    </div>
+                </div>
+
+                <div class="arena-card" data-arena="4">
+                    <div class="arena-image">
+                        <img src="https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Usine">
+                        <div class="arena-overlay">
+                            <div class="arena-number">4</div>
+                        </div>
+                    </div>
+                    <div class="arena-info">
+                        <h3>USINE</h3>
+                        <p>Zone industrielle</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-footer">
+                <button id="closeBtn" class="close-btn">FERMER</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

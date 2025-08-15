@@ -1,0 +1,83 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const arenaMenu = document.getElementById('arenaMenu');
+    const closeBtn = document.getElementById('closeBtn');
+    const arenaCards = document.querySelectorAll('.arena-card');
+
+    // Écouter les messages de FiveM
+    window.addEventListener('message', function(event) {
+        const data = event.data;
+        
+        if (data.action === 'openArenaMenu') {
+            showMenu();
+        } else if (data.action === 'closeArenaMenu') {
+            hideMenu();
+        }
+    });
+
+    // Afficher le menu
+    function showMenu() {
+        arenaMenu.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Cacher le menu
+    function hideMenu() {
+        arenaMenu.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        
+        // Envoyer message à FiveM pour fermer
+        fetch(`https://${GetParentResourceName()}/closeMenu`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({})
+        });
+    }
+
+    // Sélectionner une arène
+    function selectArena(arenaIndex) {
+        // Envoyer la sélection à FiveM
+        fetch(`https://${GetParentResourceName()}/selectArena`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                index: arenaIndex
+            })
+        });
+        
+        hideMenu();
+    }
+
+    // Event listeners
+    closeBtn.addEventListener('click', hideMenu);
+
+    arenaCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const arenaIndex = parseInt(this.dataset.arena);
+            selectArena(arenaIndex);
+        });
+    });
+
+    // Fermer avec Échap
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            hideMenu();
+        }
+    });
+
+    // Empêcher la fermeture en cliquant sur le conteneur
+    document.querySelector('.menu-container').addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    // Fermer en cliquant sur l'arrière-plan
+    arenaMenu.addEventListener('click', hideMenu);
+});
+
+// Fonction helper pour FiveM
+function GetParentResourceName() {
+    return window.location.hostname === '' ? 'pvp_pack' : window.location.hostname;
+}
