@@ -87,75 +87,73 @@ Citizen.CreateThread(function()
         end
 
         if inArena then
-            -- HUD moderne avec fond carré
-            -- Fond principal du HUD
-            DrawRect(0.15, 0.08, 0.25, 0.12, 0, 0, 0, 180)
-            -- Bordure rouge
-            DrawRect(0.15, 0.08, 0.25, 0.003, 255, 68, 68, 255)
-            DrawRect(0.15, 0.137, 0.25, 0.003, 255, 68, 68, 255)
-            DrawRect(0.025, 0.08, 0.003, 0.12, 255, 68, 68, 255)
-            DrawRect(0.272, 0.08, 0.003, 0.12, 255, 68, 68, 255)
+            -- HUD PvP moderne et harmonieux
+            -- Fond principal arrondi avec dégradé
+            DrawRect(0.15, 0.08, 0.28, 0.14, 0, 0, 0, 200)
+            -- Bordure dégradée
+            DrawRect(0.15, 0.08, 0.28, 0.004, 187, 0, 10, 255)
+            DrawRect(0.15, 0.216, 0.28, 0.004, 187, 0, 10, 255)
+            DrawRect(0.01, 0.08, 0.004, 0.14, 187, 0, 10, 255)
+            DrawRect(0.286, 0.08, 0.004, 0.14, 187, 0, 10, 255)
             
-            -- Titre PvP
-            SetTextScale(0.5, 0.5)
+            -- Titre PvP Arena centré
+            SetTextScale(0.55, 0.55)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255, 68, 68, 255)
+            SetTextColour(187, 0, 10, 255)
             SetTextEntry("STRING")
-            AddTextComponentString("PvP ARENA")
-            DrawText(0.04, 0.035)
+            AddTextComponentString("PVP ARENA")
+            DrawText(0.08, 0.035)
             
-            -- Stats Kills
-            SetTextScale(0.4, 0.4)
+            -- Section Kills (gauche)
+            SetTextScale(0.45, 0.45)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255, 255, 255, 255)
+            SetTextColour(46, 204, 113, 255)
             SetTextEntry("STRING")
             AddTextComponentString("KILLS")
-            DrawText(0.04, 0.065)
+            DrawText(0.04, 0.07)
             
-            SetTextScale(0.6, 0.6)
+            SetTextScale(0.7, 0.7)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(46, 204, 113, 255)
             SetTextEntry("STRING")
             AddTextComponentString(tostring(hud.kills))
-            DrawText(0.04, 0.085)
+            DrawText(0.04, 0.095)
             
-            -- Stats Deaths
-            SetTextScale(0.4, 0.4)
+            -- Section Deaths (droite)
+            SetTextScale(0.45, 0.45)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255, 255, 255, 255)
+            SetTextColour(231, 76, 60, 255)
             SetTextEntry("STRING")
             AddTextComponentString("DEATHS")
-            DrawText(0.04, 0.115)
+            DrawText(0.2, 0.07)
             
-            SetTextScale(0.6, 0.6)
+            SetTextScale(0.7, 0.7)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(231, 76, 60, 255)
             SetTextEntry("STRING")
             AddTextComponentString(tostring(hud.deaths))
-            DrawText(0.04, 0.135)
+            DrawText(0.2, 0.095)
             
-            -- Séparateur vertical
-            DrawRect(0.18, 0.08, 0.002, 0.12, 255, 255, 255, 100)
+            -- Séparateur vertical harmonieux
+            DrawRect(0.15, 0.08, 0.002, 0.14, 187, 0, 10, 150)
             
-            -- Instructions de sortie avec fond
-            DrawRect(0.15, 0.22, 0.25, 0.05, 0, 0, 0, 150)
-            DrawRect(0.15, 0.22, 0.25, 0.002, 255, 68, 68, 255)
-            DrawRect(0.15, 0.268, 0.25, 0.002, 255, 68, 68, 255)
-            DrawRect(0.025, 0.22, 0.002, 0.05, 255, 68, 68, 255)
-            DrawRect(0.272, 0.22, 0.002, 0.05, 255, 68, 68, 255)
+            -- Instructions de sortie centrées
+            DrawRect(0.15, 0.14, 0.28, 0.04, 0, 0, 0, 180)
+            DrawRect(0.15, 0.14, 0.28, 0.003, 187, 0, 10, 255)
+            DrawRect(0.15, 0.177, 0.28, 0.003, 187, 0, 10, 255)
             
-            SetTextScale(0.35, 0.35)
+            SetTextScale(0.4, 0.4)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255, 255, 255, 255)
+            SetTextColour(255, 255, 255, 200)
             SetTextEntry("STRING")
-            AddTextComponentString("~INPUT_CONTEXT~ Pour quitter l'arène")
-            DrawText(0.04, 0.235)
+            AddTextComponentString("Appuyez sur ~r~E~w~ pour quitter l'arène")
+            DrawText(0.055, 0.155)
 
             -- Marqueur au sol + blocage sortie
             if currentArena and Config.Arenas and Config.Arenas[currentArena] then
