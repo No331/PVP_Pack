@@ -87,89 +87,108 @@ Citizen.CreateThread(function()
         end
 
         if inArena then
-            -- HUD PvP compact et moderne comme dans l'image
-            local hudWidth = 0.22
-            local hudHeight = 0.08
+            -- HUD PvP avec carré noir transparent, logo et stats organisées
+            local hudWidth = 0.35
+            local hudHeight = 0.12
             local hudX = 0.02
             local hudY = 0.02
             
-            -- Fond compact arrondi
-            DrawRect(hudX + hudWidth/2, hudY + hudHeight/2, hudWidth, hudHeight, 20, 20, 25, 200)
+            -- Fond carré noir transparent
+            DrawRect(hudX + hudWidth/2, hudY + hudHeight/2, hudWidth, hudHeight, 0, 0, 0, 150)
             
-            -- Bordure violette comme dans l'image
-            DrawRect(hudX + 0.001, hudY + hudHeight/2, 0.002, hudHeight - 0.005, 138, 43, 226, 255)
-            DrawRect(hudX + hudWidth - 0.001, hudY + hudHeight/2, 0.002, hudHeight - 0.005, 138, 43, 226, 255)
-            DrawRect(hudX + hudWidth/2, hudY + 0.001, hudWidth - 0.005, 0.002, 138, 43, 226, 255)
-            DrawRect(hudX + hudWidth/2, hudY + hudHeight - 0.001, hudWidth - 0.005, 0.002, 138, 43, 226, 255)
-            
-            -- Icône et texte "Kills" à gauche
-            SetTextScale(0.28, 0.28)
+            -- Logo à gauche du carré
+            SetTextScale(0.5, 0.5)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255, 255, 255, 200)
+            SetTextColour(255, 255, 255, 255)
             SetTextEntry("STRING")
-            AddTextComponentString("🏆 Kills")
-            DrawText(hudX + 0.01, hudY + 0.015)
+            AddTextComponentString("⚔️")
+            DrawText(hudX + 0.01, hudY + 0.04)
+            
+            -- Section KILLS (à droite du logo)
+            -- Icône kill
+            SetTextScale(0.35, 0.35)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(0, 255, 0, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString("🏆")
+            DrawText(hudX + 0.06, hudY + 0.015)
+            
+            -- Texte "Kills"
+            SetTextScale(0.25, 0.25)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(0, 255, 0, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString("Kills")
+            DrawText(hudX + 0.09, hudY + 0.02)
             
             -- Nombre de kills
-            SetTextScale(0.32, 0.32)
+            SetTextScale(0.4, 0.4)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(255, 255, 255, 255)
             SetTextEntry("STRING")
             AddTextComponentString(tostring(hud.kills))
-            DrawText(hudX + 0.08, hudY + 0.015)
+            DrawText(hudX + 0.13, hudY + 0.015)
             
-            -- Icône et texte "Deaths" au centre
-            SetTextScale(0.28, 0.28)
+            -- Section DEATHS (plus loin à droite)
+            -- Icône death
+            SetTextScale(0.35, 0.35)
             SetTextFont(4)
             SetTextProportional(1)
-            SetTextColour(255, 255, 255, 200)
+            SetTextColour(255, 0, 0, 255)
             SetTextEntry("STRING")
-            AddTextComponentString("KILLS")
-            SetTextCentre(true)
-            DrawText(hudX + hudWidth/4, hudY + 0.055)
-            
-            -- Nombre de kills
-            SetTextScale(0.45, 0.45)
-            SetTextFont(4)
-            SetTextProportional(1)
-            SetTextColour(255, 255, 255, 255)
-            SetTextEntry("STRING")
-            AddTextComponentString(tostring(hud.kills))
-            SetTextCentre(true)
-            AddTextComponentString("💀 Deaths")
-            DrawText(hudX + 0.11, hudY + 0.015)
-            -- DEATHS à droite
-            -- Nombre de deaths
-            SetTextScale(0.32, 0.32)
-            SetTextFont(4)
-            SetTextProportional(1)
-            SetTextColour(255, 255, 255, 255)
-            SetTextEntry("STRING")
-            AddTextComponentString("DEATHS")
-            SetTextCentre(true)
-            DrawText(hudX + 3*hudWidth/4, hudY + 0.055)
-            
-            -- Nombre de deaths
-            SetTextScale(0.45, 0.45)
-            SetTextFont(4)
-            SetTextProportional(1)
-            SetTextColour(255, 255, 255, 255)
-            SetTextEntry("STRING")
-            AddTextComponentString(tostring(hud.deaths))
-            AddTextComponentString(tostring(hud.deaths))
+            AddTextComponentString("💀")
             DrawText(hudX + 0.18, hudY + 0.015)
             
-            -- K/D Ratio à droite (optionnel)
-            local kd = hud.deaths > 0 and (hud.kills / hud.deaths) or hud.kills
-            SetTextScale(0.28, 0.28)
+            -- Texte "Deaths"
+            SetTextScale(0.25, 0.25)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 0, 0, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString("Deaths")
+            DrawText(hudX + 0.21, hudY + 0.02)
+            
+            -- Nombre de deaths
+            SetTextScale(0.4, 0.4)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 255, 255, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString(tostring(hud.deaths))
+            DrawText(hudX + 0.26, hudY + 0.015)
+            
+            -- Section K/D en dessous de Deaths
+            -- Icône stats
+            SetTextScale(0.35, 0.35)
             SetTextFont(4)
             SetTextProportional(1)
             SetTextColour(138, 43, 226, 255)
             SetTextEntry("STRING")
-            AddTextComponentString("K/D " .. string.format("%.2f", kd))
-            DrawText(hudX + 0.01, hudY + 0.045)
+            AddTextComponentString("📊")
+            DrawText(hudX + 0.18, hudY + 0.055)
+            
+            -- Texte "K/D"
+            SetTextScale(0.25, 0.25)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(138, 43, 226, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString("K/D")
+            DrawText(hudX + 0.21, hudY + 0.06)
+            
+            -- Calcul et affichage K/D
+            local kd = hud.deaths > 0 and (hud.kills / hud.deaths) or hud.kills
+            SetTextScale(0.4, 0.4)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextColour(255, 255, 255, 255)
+            SetTextEntry("STRING")
+            AddTextComponentString(string.format("%.2f", kd))
+            DrawText(hudX + 0.26, hudY + 0.055)
             
             -- Instructions pour quitter en bas à droite de l'écran
             SetTextScale(0.35, 0.35)
@@ -178,9 +197,7 @@ Citizen.CreateThread(function()
             SetTextColour(255, 255, 255, 200)
             SetTextEntry("STRING")
             AddTextComponentString("Appuyez sur ~r~E~w~ pour quitter l'arène")
-            SetTextCentre(true)
-            DrawText(0.85, 0.92)
-            DrawText(hudX + hudWidth/2, hudY + 0.105)
+            DrawText(0.75, 0.92)
 
             -- Marqueur au sol + blocage sortie
             if currentArena and Config.Arenas and Config.Arenas[currentArena] then
