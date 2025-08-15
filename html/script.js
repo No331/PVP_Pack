@@ -79,5 +79,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Fonction helper pour FiveM
 function GetParentResourceName() {
-    return window.location.hostname === '' ? 'pvp_pack' : window.location.hostname;
+    return 'pvp_pack';
 }
