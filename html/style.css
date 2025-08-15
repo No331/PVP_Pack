@@ -20,8 +20,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 1000;
 }
 
@@ -30,218 +29,126 @@ body {
 }
 
 .menu-container {
-    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-    border: 2px solid #bb000a;
-    border-radius: 20px;
+    background: rgba(20, 20, 20, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     padding: 40px;
-    max-width: 800px;
+    max-width: 900px;
     width: 90%;
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(187, 0, 10, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
 }
 
 .menu-header {
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 40px;
 }
 
 .menu-header h1 {
-    background: linear-gradient(135deg, #bb000a, #ff4757);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 2.5rem;
+    color: #ff4444;
+    font-size: 2.2rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 15px;
-    text-shadow: 0 0 20px rgba(187, 0, 10, 0.5);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
 }
 
-.header-line {
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #bb000a 20%, #ff4757 50%, #bb000a 80%, transparent);
-    border-radius: 2px;
-    box-shadow: 0 0 10px rgba(187, 0, 10, 0.5);
+.subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    font-weight: 400;
 }
 
 .arenas-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 25px;
-    margin-bottom: 35px;
+    gap: 30px;
+    margin-bottom: 40px;
 }
 
 .arena-card {
-    background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
-    border: 2px solid #333333;
-    border-radius: 15px;
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.3s ease;
     position: relative;
-    box-shadow: 
-        0 8px 25px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .arena-card:hover {
-    border-color: #bb000a;
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.4),
-        0 0 25px rgba(187, 0, 10, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    border-color: rgba(255, 68, 68, 0.5);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
 }
 
 .arena-image {
-    position: relative;
     width: 100%;
     height: 200px;
     overflow: hidden;
-    border-radius: 13px 13px 0 0;
+    position: relative;
 }
 
 .arena-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
-    filter: brightness(0.8) contrast(1.1);
+    transition: transform 0.3s ease;
 }
 
 .arena-card:hover .arena-image img {
-    transform: scale(1.1);
-    filter: brightness(1) contrast(1.2);
+    transform: scale(1.05);
 }
 
-.arena-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(187, 0, 10, 0.8), rgba(255, 71, 87, 0.6));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    border-radius: 13px 13px 0 0;
-}
-
-.arena-card:hover .arena-overlay {
-    opacity: 1;
-}
-
-.join-btn {
-    background: linear-gradient(135deg, #ffffff, #f1f2f6);
-    color: #bb000a;
-    border: none;
-    border-radius: 25px;
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Roboto', Arial, sans-serif;
-    letter-spacing: 2px;
-    box-shadow: 
-        0 5px 15px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-.join-btn:hover {
-    background: linear-gradient(135deg, #bb000a, #ff4757);
-    color: #ffffff;
-    transform: scale(1.1);
-    box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.4),
-        0 0 20px rgba(187, 0, 10, 0.6);
-}
-
-.join-btn:active {
-    transform: scale(0.95);
+.arena-info {
+    padding: 20px;
+    text-align: center;
 }
 
 .arena-name {
-    background: linear-gradient(135deg, #000000, #1a1a1a);
     color: #ffffff;
-    text-align: center;
-    padding: 18px;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    border-top: 2px solid #bb000a;
-    position: relative;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
 }
 
-.arena-name::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #bb000a, #ff4757, #bb000a);
-    box-shadow: 0 0 10px rgba(187, 0, 10, 0.5);
+.arena-description {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 
 .menu-footer {
     text-align: center;
 }
 
-.footer-line {
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #bb000a 20%, #ff4757 50%, #bb000a 80%, transparent);
-    border-radius: 2px;
-    margin-bottom: 25px;
-    box-shadow: 0 0 10px rgba(187, 0, 10, 0.5);
-}
-
 .close-btn {
-    background: linear-gradient(145deg, transparent, rgba(187, 0, 10, 0.1));
+    background: rgba(60, 60, 60, 0.8);
     color: #ffffff;
-    border: 2px solid #bb000a;
-    border-radius: 30px;
-    padding: 15px 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.4s ease;
+    transition: all 0.3s ease;
     font-family: 'Roboto', Arial, sans-serif;
-    letter-spacing: 2px;
-    box-shadow: 
-        0 5px 15px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    letter-spacing: 1px;
 }
 
 .close-btn:hover {
-    background: linear-gradient(135deg, #bb000a, #ff4757);
-    color: #ffffff;
-    transform: translateY(-3px);
-    box-shadow: 
-        0 10px 25px rgba(0, 0, 0, 0.4),
-        0 0 20px rgba(187, 0, 10, 0.6);
-}
-
-.close-btn:active {
-    transform: translateY(0);
+    background: rgba(80, 80, 80, 0.9);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
 }
 
 /* Responsive pour mobile */
 @media (max-width: 768px) {
     .menu-container {
-        padding: 30px 25px;
+        padding: 30px 20px;
         margin: 20px;
-        border-radius: 15px;
     }
     
     .arenas-grid {
@@ -250,8 +157,8 @@ body {
     }
     
     .menu-header h1 {
-        font-size: 2rem;
-        letter-spacing: 3px;
+        font-size: 1.8rem;
+        letter-spacing: 2px;
     }
     
     .arena-image {
@@ -259,36 +166,26 @@ body {
     }
     
     .arena-name {
-        padding: 15px;
-        font-size: 1rem;
-        letter-spacing: 2px;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
     }
 }
 
 @media (max-width: 480px) {
     .menu-container {
-        padding: 25px 20px;
-        border-radius: 12px;
+        padding: 25px 15px;
     }
     
     .menu-header h1 {
-        font-size: 1.7rem;
-        letter-spacing: 2px;
+        font-size: 1.6rem;
     }
     
     .arena-image {
         height: 140px;
     }
     
-    .join-btn {
-        padding: 12px 25px;
-        font-size: 1rem;
-        border-radius: 20px;
-    }
-    
     .close-btn {
-        padding: 12px 40px;
-        font-size: 1rem;
-        border-radius: 25px;
+        padding: 10px 30px;
+        font-size: 0.9rem;
     }
 }
