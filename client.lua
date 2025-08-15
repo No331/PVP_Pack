@@ -46,62 +46,38 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         if disableVMenu then
-            -- Essayer tous les exports possibles de vMenu
+            -- Forcer la fermeture de vMenu avec tous les moyens possibles
             if GetResourceState('vMenu') == 'started' then
                 -- Exports vMenu v3.7.0
-                pcall(function() exports.vMenu:SetMenuVisibility(false) end)
-                pcall(function() exports.vMenu:DisableMenu() end)
                 pcall(function() exports.vMenu:CloseMenu() end)
-                pcall(function() exports['vMenu']:SetMenuVisibility(false) end)
-                pcall(function() exports['vMenu']:DisableMenu() end)
                 pcall(function() exports['vMenu']:CloseMenu() end)
+                pcall(function() exports.vMenu:SetMenuVisibility(false) end)
+                pcall(function() exports['vMenu']:SetMenuVisibility(false) end)
+                
+                -- Vérifier si le menu est ouvert et le fermer
+                pcall(function() 
+                    if exports.vMenu:IsMenuOpen() then
+                        exports.vMenu:CloseMenu()
+                    end
+                end)
+                pcall(function() 
+                    if exports['vMenu']:IsMenuOpen() then
+                        exports['vMenu']:CloseMenu()
+                    end
+                end)
             end
             
-            -- Événements vMenu
-            TriggerEvent('vMenu:SetMenuVisibility', false)
-            TriggerEvent('vMenu:DisableMenu')
+            -- Événements de fermeture vMenu
             TriggerEvent('vMenu:CloseMenu')
-            TriggerEvent('vMenu:SetDisableMenu', true)
-            TriggerEvent('vmenu:client:SetMenuVisibility', false)
+            TriggerEvent('vmenu:CloseMenu')
+            TriggerEvent('vMenu:SetMenuVisibility', false)
             TriggerEvent('vmenu:SetMenuVisibility', false)
+            TriggerEvent('vMenu:client:CloseMenu')
+            TriggerEvent('vmenu:client:CloseMenu')
             
-            -- Bloquer TOUS les contrôles possibles
-            for i = 0, 350 do
-                DisableControlAction(0, i, true)
-                DisableControlAction(1, i, true)
-                DisableControlAction(2, i, true)
-            end
-            
-            -- Réactiver seulement les contrôles essentiels pour le jeu
-            EnableControlAction(0, 1, true) -- LookLeftRight
-            EnableControlAction(0, 2, true) -- LookUpDown
-            EnableControlAction(0, 24, true) -- Attack
-            EnableControlAction(0, 25, true) -- Aim
-            EnableControlAction(0, 32, true) -- MoveUpOnly
-            EnableControlAction(0, 33, true) -- MoveDownOnly
-            EnableControlAction(0, 34, true) -- MoveLeftOnly
-            EnableControlAction(0, 35, true) -- MoveRightOnly
-            EnableControlAction(0, 21, true) -- Sprint
-            EnableControlAction(0, 22, true) -- Jump
-            EnableControlAction(0, 36, true) -- Duck
-            EnableControlAction(0, 44, true) -- Cover
-            EnableControlAction(0, 140, true) -- MeleeAttackLight
-            EnableControlAction(0, 141, true) -- MeleeAttackHeavy
-            EnableControlAction(0, 142, true) -- MeleeAttackAlternate
-            EnableControlAction(0, 143, true) -- MeleeBlock
-            EnableControlAction(0, 37, true) -- SelectWeapon
-            EnableControlAction(0, 157, true) -- SelectWeaponUnarmed
-            EnableControlAction(0, 158, true) -- SelectWeaponMelee
-            EnableControlAction(0, 159, true) -- SelectWeaponHandgun
-            EnableControlAction(0, 160, true) -- SelectWeaponShotgun
-            EnableControlAction(0, 161, true) -- SelectWeaponSMG
-            EnableControlAction(0, 162, true) -- SelectWeaponAutoRifle
-            EnableControlAction(0, 163, true) -- SelectWeaponSniper
-            EnableControlAction(0, 164, true) -- SelectWeaponHeavy
-            EnableControlAction(0, 165, true) -- SelectWeaponSpecial
-            EnableControlAction(0, 23, true) -- Enter
-            EnableControlAction(0, 75, true) -- Exit
-            EnableControlAction(0, 38, true) -- E (pour quitter l'arène)
+            -- Désactiver NUI si vMenu l'utilise
+            SetNuiFocus(false, false)
+            SetNuiFocusKeepInput(false)
         end
     end
 end)
