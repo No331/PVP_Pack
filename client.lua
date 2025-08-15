@@ -194,14 +194,18 @@ AddEventHandler('pvp:openArenaMenu', function()
     })
 end)
 
--- Menu choix arène (NUI)
-
+-- Callbacks NUI
 RegisterNUICallback("selectArena", function(data, cb)
-    local arenaIndex = data.index
-    print("Arena selected: " .. arenaIndex) -- Debug
-    TriggerServerEvent("pvp:joinArena", arenaIndex)
-    SetNuiFocus(false, false)
-    cb("ok")
+    local arenaIndex = tonumber(data.index)
+    print("Arena selected: " .. tostring(arenaIndex)) -- Debug
+    if arenaIndex and Config.Arenas[arenaIndex] then
+        TriggerServerEvent("pvp:joinArena", arenaIndex)
+        SetNuiFocus(false, false)
+        cb("ok")
+    else
+        print("Invalid arena index: " .. tostring(arenaIndex))
+        cb("error")
+    end
 end)
 
 RegisterNUICallback("closeMenu", function(_, cb)
@@ -236,6 +240,7 @@ AddEventHandler('pvp:forceJoinClient', function(arenaIndex, arenaData)
     createArenaBlip(a)
 
     TriggerServerEvent('pvp:playerEnteredArena', arenaIndex)
+    TriggerEvent('chat:addMessage', { args = {"PvP", "^2Vous avez rejoint l'arène " .. a.name .. " !"} })
 end)
 
 -- Quitter PvP

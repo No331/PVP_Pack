@@ -16,18 +16,29 @@ RegisterNetEvent('pvp:joinArena')
 AddEventHandler('pvp:joinArena', function(arenaIndex)
     local src = source
     local a = getArena(arenaIndex)
-    if not a then return end
+    
+    print("Server: Player " .. src .. " trying to join arena " .. tostring(arenaIndex)) -- Debug
+    
+    if not a then 
+        print("Server: Arena " .. tostring(arenaIndex) .. " not found")
+        return 
+    end
+    
+    -- Initialiser le joueur
     players[src] = {arena = arenaIndex, kills = 0, deaths = 0, vMenuDisabled = true}
     arenaPlayers[arenaIndex] = arenaPlayers[arenaIndex] or {}
     arenaPlayers[arenaIndex][src] = true
-    -- tell client to teleport and give weapon
+    
+    print("Server: Player " .. src .. " joining arena " .. a.name)
+    
+    -- Téléporter le joueur et donner l'arme
     TriggerClientEvent('pvp:forceJoinClient', src, arenaIndex, a)
-    print(('Player %s joined PvP arena %s'):format(src, arenaIndex))
 end)
 
 RegisterNetEvent('pvp:playerEnteredArena')
 AddEventHandler('pvp:playerEnteredArena', function(arenaIndex)
     local src = source
+    print("Server: Player " .. src .. " entered arena " .. tostring(arenaIndex))
     players[src] = players[src] or {arena = arenaIndex, kills = 0, deaths = 0, vMenuDisabled = true}
 end)
 
@@ -40,9 +51,12 @@ AddEventHandler('pvp:playerDied', function(killerServerId, arenaIndex)
     players[victim] = players[victim] or {arena = arenaIndex, kills = 0, deaths = 0, vMenuDisabled = true}
     players[victim].deaths = players[victim].deaths + 1
 
+    print("Server: Player " .. victim .. " died in arena " .. tostring(arenaIndex))
+
     -- if killer is valid and tracked, award kill
     if killerServerId and killerServerId ~= 0 and players[killerServerId] then
         players[killerServerId].kills = players[killerServerId].kills + 1
+        print("Server: Player " .. killerServerId .. " got a kill")
         -- update killer HUD
         TriggerClientEvent('pvp:updateHud', killerServerId, players[killerServerId].kills, players[killerServerId].deaths)
     end
@@ -75,13 +89,14 @@ AddEventHandler('playerDropped', function(reason)
             arenaPlayers[arena][src] = nil
         end
         players[src] = nil
+        print("Server: Player " .. src .. " disconnected and removed from PvP")
     end
 end)
 
 -- Boucle serveur pour maintenir vMenu désactivé si joueur en arène
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1000) -- check toutes les secondes
+        Citizen.Wait(5000) -- check toutes les 5 secondes
         for src,_ in pairs(players) do
             if isInArena(src) then
                 TriggerClientEvent('vMenu:disableMenu', src, true)
